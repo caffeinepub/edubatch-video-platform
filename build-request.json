@@ -1,0 +1,95 @@
+{
+  "kind": "build_request",
+  "title": "Add MP4 video upload for admin users only",
+  "projectName": "EduBatch Video Platform",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Add an admin role system to the backend. Store a list of admin principal IDs. Pre-register the deployer's principal as the initial admin. Expose a query `isAdmin(principal)` that returns true if the given principal is in the admin list.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "only adimin can uplod video , make me adimen"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A hardcoded or stored set of admin principal IDs exists in the backend.",
+        "`isAdmin()` returns true for the registered admin principal and false for all others."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Add an MP4 file upload field to the video upload form in the admin dashboard. When a user selects an MP4 file, encode it as a Blob/base64 and submit it to a new backend endpoint `uploadVideoFile` that accepts chunked binary data and stores it, returning a reference URL or ID. The stored file URL should be used as the video source in the player.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "uploded video as mp4 uplod so add option"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A file input accepting `.mp4` files is present in `VideoUploadForm.tsx`.",
+        "The selected MP4 file is uploaded to the backend and a reference is returned.",
+        "The video player uses the uploaded MP4 file reference when no YouTube URL is provided.",
+        "Non-admin users do not see the file upload option."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Gate access to the admin dashboard and video upload functionality behind the `isAdmin` check. If the authenticated user's principal is not an admin, hide the Admin navigation button and redirect any direct access to the admin route to the home page with an 'Access denied' message.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "only adimin can uplod video"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The Admin button in `NavigationBar.tsx` is only visible to admin principals.",
+        "Non-admin users who navigate directly to `/admin` are redirected to home with an access-denied notice.",
+        "Admin users can access the dashboard and upload MP4 videos without restriction."
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Update `VideoPlayerPage.tsx` to detect when a video's source is an uploaded MP4 (stored in the backend) rather than a YouTube URL, and render it using a native `<video>` element with playback controls instead of an iframe.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "uploded video as mp4 uplod so add option"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Videos with an MP4 source render in a native HTML5 `<video>` player.",
+        "YouTube-linked videos continue to render via the existing iframe embed.",
+        "The player falls back gracefully if the source is unavailable."
+      ]
+    }
+  ],
+  "constraints": [
+    "All Motoko logic must remain in the single main actor (backend/main.mo).",
+    "Do not modify files under frontend/src/hooks/ or frontend/src/components/ui.",
+    "Admin access must be checked against the authenticated Internet Identity principal."
+  ],
+  "nonGoals": [
+    "Multi-admin management UI (adding/removing admins via the dashboard).",
+    "Video transcoding or format conversion.",
+    "External storage or CDN integration for video files.",
+    "User roles beyond a simple admin/non-admin distinction."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}

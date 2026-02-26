@@ -1,0 +1,76 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Add MP4 video upload for admin users only",
+  "requirements": [
+    {
+      "id": "REQ-2",
+      "summary": "Add MP4 file upload field to admin video upload form with chunked upload to backend",
+      "acceptanceCriteria": [
+        "A file input accepting `.mp4` files is present in `VideoUploadForm.tsx`.",
+        "The selected MP4 file is uploaded to the backend and a reference is returned.",
+        "The video player uses the uploaded MP4 file reference when no YouTube URL is provided.",
+        "Non-admin users do not see the file upload option."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/VideoUploadForm.tsx",
+          "operation": "modify",
+          "description": "Add an MP4 file input field to the form that accepts only .mp4 files. Use the blob-storage component to handle file uploads: create an ExternalBlob from the selected file using ExternalBlob.fromBytes() and call withUploadProgress() to track upload progress. When the file is selected, upload it via the backend's uploadVideoFile capability to obtain a reference URL/ID. Store this reference in the form state and submit it as the video URL when creating/updating a video. Show upload progress feedback. Verify the blob-storage component's usage instructions before implementing. The form should validate that either a YouTube URL or an MP4 file is provided, not both."
+        },
+        {
+          "path": "frontend/src/hooks/useQueries.ts",
+          "operation": "modify",
+          "description": "Add a mutation hook for uploadVideoFile that accepts a video ID and ExternalBlob, calls the backend uploadVideoFile capability, and returns the stored file reference. This mutation should be used in VideoUploadForm before creating the video record. Include proper error handling and loading states."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Gate admin dashboard and video upload functionality behind isAdmin check",
+      "acceptanceCriteria": [
+        "The Admin button in `NavigationBar.tsx` is only visible to admin principals.",
+        "Non-admin users who navigate directly to `/admin` are redirected to home with an access-denied notice.",
+        "Admin users can access the dashboard and upload MP4 videos without restriction."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/NavigationBar.tsx",
+          "operation": "modify",
+          "description": "Add a check using the authorization component's isCallerAdmin query from the backend. Only render the Admin navigation button when the authenticated user is confirmed as an admin. Use the useActor hook to ensure the actor is available, then call isCallerAdmin() to determine visibility. Show nothing (or a placeholder) while the admin status is loading. Verify the authorization component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/AdminDashboard.tsx",
+          "operation": "modify",
+          "description": "Add an admin authorization guard at the top of the component. Call the backend's isCallerAdmin() capability using a query hook. While loading, show a loading spinner. If the user is not an admin, display an access-denied message and programmatically redirect to the home page using the router's navigate function with a toast notification. Only render the dashboard content if isCallerAdmin returns true. Verify the authorization component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useQueries.ts",
+          "operation": "modify",
+          "description": "Add a query hook useIsCallerAdmin that calls the backend's isCallerAdmin() capability and returns the admin status with proper loading and error states. This hook should be enabled only when the actor is available and the user is authenticated."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Update VideoPlayerPage to detect and render uploaded MP4 files using native HTML5 video player",
+      "acceptanceCriteria": [
+        "Videos with an MP4 source render in a native HTML5 `<video>` player.",
+        "YouTube-linked videos continue to render via the existing iframe embed.",
+        "The player falls back gracefully if the source is unavailable."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/VideoPlayerPage.tsx",
+          "operation": "modify",
+          "description": "Add logic to detect whether the video's videoUrl is a YouTube URL (contains 'youtube.com' or 'youtu.be') or an uploaded MP4 reference. For uploaded MP4 references, fetch the file using the backend's getFile capability to obtain an ExternalBlob, then call getDirectURL() to get the streaming URL. Render a native HTML5 <video> element with controls, autoplay, and the direct URL as the source for MP4 files. Keep the existing iframe embed for YouTube URLs. Add error handling and fallback UI if the file cannot be loaded. Verify the blob-storage component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useQueries.ts",
+          "operation": "modify",
+          "description": "Add a query hook useGetFile that accepts a file ID and calls the backend's getFile capability, returning the ExternalBlob or null. This hook should be enabled only when a valid file ID is provided and should handle loading and error states properly."
+        }
+      ]
+    }
+  ]
+}

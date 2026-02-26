@@ -1,0 +1,62 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Educational platform (likely NEET batch) with video management. Admin-only MP4 video upload feature requested, with the user designated as admin.",
+  "architectural_notes": [
+    "Only admin users can upload MP4 videos; role-based access control required"
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "existing_features": [
+    {
+      "id": "feature-add-an-mp4-file-upload-field-to-the-video-upload-form-in-the-admin-dashboard-when-a-user-selects-an-mp4-file-encode-it-as-a-blob-base64-and-submit-it-to-a-new-backend-endpoint-uploadvideofile-that-accepts-chunked-binary-data-and-stores-it-returning-a-reference-url-or-id-the-stored-file-url-should-be-used-as-the-video-source-in-the-player",
+      "title": "Add an MP4 file upload field to the video upload form in the admin dashboard. When a user selects an MP4 file, encode it as a Blob/base64 and submit it to a new backend endpoint `uploadVideoFile` that accepts chunked binary data and stores it, returning a reference URL or ID. The stored file URL should be used as the video source in the player.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-gate-access-to-the-admin-dashboard-and-video-upload-functionality-behind-the-isadmin-check-if-the-authenticated-user-s-principal-is-not-an-admin-hide-the-admin-navigation-button-and-redirect-any-direct-access-to-the-admin-route-to-the-home-page-with-an-access-denied-message",
+      "title": "Gate access to the admin dashboard and video upload functionality behind the `isAdmin` check. If the authenticated user's principal is not an admin, hide the Admin navigation button and redirect any direct access to the admin route to the home page with an 'Access denied' message.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-videoplayerpage-tsx-to-detect-when-a-video-s-source-is-an-uploaded-mp4-stored-in-the-backend-rather-than-a-youtube-url-and-render-it-using-a-native-video-element-with-playback-controls-instead-of-an-iframe",
+      "title": "Update `VideoPlayerPage.tsx` to detect when a video's source is an uploaded MP4 (stored in the backend) rather than a YouTube URL, and render it using a native `<video>` element with playback controls instead of an iframe.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Add MP4 video upload option for admin users only",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Designate the current user as admin with upload privileges",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Add an admin role system to the backend. Store a list of admin principal IDs. Pre-register the deployer's principal as the initial admin. Expose a query `isAdmin(principal)` that returns true if the given principal is in the admin list.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "EduBatch Video Platform",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

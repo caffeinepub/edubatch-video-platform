@@ -1,0 +1,69 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-add-an-mp4-file-upload-field-to-the-video-upload-form-in-the-admin-dashboard-when-a-user-selects-an-mp4-file-encode-it-as-a-blob-base64-and-submit-it-to-a-new-backend-endpoint-uploadvideofile-that-accepts-chunked-binary-data-and-stores-it-returning-a-reference-url-or-id-the-stored-file-url-should-be-used-as-the-video-source-in-the-player",
+      "featureTitle": "Add an MP4 file upload field to the video upload form in the admin dashboard. When a user selects an MP4 file, encode it as a Blob/base64 and submit it to a new backend endpoint `uploadVideoFile` that accepts chunked binary data and stores it, returning a reference URL or ID. The stored file URL should be used as the video source in the player.",
+      "files": [
+        "frontend/src/components/VideoUploadForm.tsx",
+        "frontend/src/hooks/useQueries.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "blob-storage@4.0.0",
+        "authorization@4.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-gate-access-to-the-admin-dashboard-and-video-upload-functionality-behind-the-isadmin-check-if-the-authenticated-user-s-principal-is-not-an-admin-hide-the-admin-navigation-button-and-redirect-any-direct-access-to-the-admin-route-to-the-home-page-with-an-access-denied-message",
+      "featureTitle": "Gate access to the admin dashboard and video upload functionality behind the `isAdmin` check. If the authenticated user's principal is not an admin, hide the Admin navigation button and redirect any direct access to the admin route to the home page with an 'Access denied' message.",
+      "files": [
+        "frontend/src/components/NavigationBar.tsx",
+        "frontend/src/hooks/useQueries.ts",
+        "frontend/src/pages/AdminDashboard.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "blob-storage@4.0.0",
+        "authorization@4.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-update-videoplayerpage-tsx-to-detect-when-a-video-s-source-is-an-uploaded-mp4-stored-in-the-backend-rather-than-a-youtube-url-and-render-it-using-a-native-video-element-with-playback-controls-instead-of-an-iframe",
+      "featureTitle": "Update `VideoPlayerPage.tsx` to detect when a video's source is an uploaded MP4 (stored in the backend) rather than a YouTube URL, and render it using a native `<video>` element with playback controls instead of an iframe.",
+      "files": [
+        "frontend/src/hooks/useQueries.ts",
+        "frontend/src/pages/VideoPlayerPage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "blob-storage@4.0.0",
+        "authorization@4.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

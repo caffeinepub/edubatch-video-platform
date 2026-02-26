@@ -1,0 +1,17 @@
+{
+  "frontend/src/App.tsx": "Main app component using TanStack Router with a root layout (NavigationBar + Footer + Toaster) and four routes: home (/), category (/category/$category), video player (/video/$id), and admin (/admin).",
+  "frontend/src/hooks/useQueries.ts": "All React Query hooks for backend operations — batch CRUD, video operations, file/blob queries, admin check, and initialize mutation now correctly passes `adminToken` and `userProvidedToken` arguments (defaulting to empty strings) to satisfy the backend interface signature.",
+  "frontend/src/lib/utils.ts": "Utility functions including cn() for class merging, CATEGORY_LABELS/CATEGORY_COLORS maps for all Category enum values, categoryFromSlug() for URL param conversion, and generateId() for unique IDs.",
+  "frontend/src/components/NavigationBar.tsx": "Sticky top navigation bar that now conditionally shows the Admin button only when `useIsCallerAdmin` returns true; includes responsive mobile menu with the same admin-gated link.",
+  "frontend/src/components/Footer.tsx": "Site footer with brand info, class navigation links, platform links, copyright year, and caffeine.ai attribution with UTM tracking.",
+  "frontend/src/components/VideoCard.tsx": "Reusable video card with thumbnail (with fallback), play overlay on hover, title, subject, and category badge; links to the video player page.",
+  "frontend/src/components/BatchManagementSection.tsx": "Admin section for creating, editing, and deleting batches with an inline form, batch grid display, and confirmation dialogs for deletion.",
+  "frontend/src/components/VideoUploadForm.tsx": "Admin form for uploading video metadata with a new toggle between \"URL/YouTube\" and \"Upload MP4\" source modes; MP4 mode uses ExternalBlob to upload the file with progress tracking, storing a `mp4file:<id>` reference as the videoUrl.",
+  "frontend/src/components/VideoListAdmin.tsx": "Admin video list showing all uploaded videos in a grid with thumbnails, metadata, external link, and delete functionality with confirmation dialogs.",
+  "frontend/src/pages/Home.tsx": "Public homepage with hero banner, stats, NEET batches section, class category grid, and available batches section; fixes `initialize.mutate({})` call to pass the required (empty) argument object.",
+  "frontend/src/pages/CategoryPage.tsx": "Dynamic category page that fetches and displays videos filtered by category, grouped by batch with section headers; handles loading/empty states.",
+  "frontend/src/pages/VideoPlayerPage.tsx": "Video player page that detects three URL types — YouTube (iframe embed), `mp4file:` references (fetches ExternalBlob via `useGetFile` and uses `getDirectURL()`), and plain URLs (native HTML5 video); includes loading and fallback states for each.",
+  "frontend/src/pages/AdminDashboard.tsx": "Admin dashboard with a guard that checks `useIsCallerAdmin` — shows a loading spinner while verifying, redirects non-admins to home with a toast, and renders the full tabbed dashboard (batches, upload, videos) only for confirmed admins.",
+  "frontend/src/index.css": "Global styles with warm amber + deep teal OKLCH color system, Google Fonts import (Playfair Display + Inter), and light/dark mode tokens.",
+  "frontend/tailwind.config.js": "Extended Tailwind config with custom font families (Playfair Display heading, Inter body), teal/amber/neet semantic color tokens, hero gradient, card-hover shadow, and all OKLCH CSS variable mappings."
+}
